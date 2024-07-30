@@ -1,0 +1,840 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/auth": {
+            "post": {
+                "description": "auth for token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "auth for token",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "true",
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.AuthResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/current_tokens": {
+            "get": {
+                "description": "current tokens",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "current tokens",
+                "responses": {
+                    "200": {
+                        "description": "true",
+                        "schema": {
+                            "$ref": "#/definitions/models.CurrentTokensResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.CurrentTokensResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.CurrentTokensResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.CurrentTokensResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/expire_all_tokens": {
+            "get": {
+                "description": "expire all tokens",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "expire all tokens",
+                "responses": {
+                    "200": {
+                        "description": "true",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireAllTokensResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireAllTokensResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireAllTokensResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireAllTokensResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/expire_token": {
+            "post": {
+                "description": "expire token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "expire token",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireTokenRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "true",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireTokenResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireTokenResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireTokenResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.ExpireTokenResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/token_exists": {
+            "post": {
+                "description": "token exists",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "token exists",
+                "parameters": [
+                    {
+                        "description": "request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TokenExistsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "true",
+                        "schema": {
+                            "$ref": "#/definitions/models.TokenExistsResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.TokenExistsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.TokenExistsResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "false",
+                        "schema": {
+                            "$ref": "#/definitions/models.TokenExistsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/persons/get/{id}": {
+            "get": {
+                "description": "Get a person",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person"
+                ],
+                "summary": "Get a person",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.PersonResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.PersonResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.PersonResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/persons/list": {
+            "get": {
+                "description": "Get all persons",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Get all persons",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.PersonListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.PersonListResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.PersonListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/create": {
+            "post": {
+                "description": "Create a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create a user",
+                "parameters": [
+                    {
+                        "description": "User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/delete/{id}": {
+            "delete": {
+                "description": "Delete a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete a user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserDeleteResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserDeleteResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserDeleteResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/get/{id}": {
+            "get": {
+                "description": "Get a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get a user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/list": {
+            "get": {
+                "description": "Get all users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Get all users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserListResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/update/{id}": {
+            "put": {
+                "description": "Update a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update a user",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserUpdateResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserUpdateResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserUpdateResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.AuthRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.AuthResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CurrentTokensResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ExpireAllTokensResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ExpireTokenRequest": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ExpireTokenResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PersonDto": {
+            "type": "object",
+            "properties": {
+                "birth_date": {
+                    "type": "string"
+                },
+                "birth_place": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "gsm": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "id_number": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PersonListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "persons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.PersonDto"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PersonResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "person": {
+                    "$ref": "#/definitions/models.PersonDto"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TokenExistsRequest": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TokenExistsResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "exists": {
+                    "description": "/ Token exists or not",
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UserCreateRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "description": "/ User email",
+                    "type": "string",
+                    "example": "john.doe@gmail.com"
+                },
+                "firstName": {
+                    "description": "/ User first name",
+                    "type": "string",
+                    "example": "John"
+                },
+                "gsm": {
+                    "description": "/ User GSM",
+                    "type": "string",
+                    "example": "555-555-5555"
+                },
+                "lastName": {
+                    "description": "/ User last name",
+                    "type": "string",
+                    "example": "Doe"
+                },
+                "password": {
+                    "description": "/ User password",
+                    "type": "string",
+                    "example": "123456"
+                }
+            }
+        },
+        "models.UserDeleteResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UserDto": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@gmail.com"
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "gsm": {
+                    "type": "string",
+                    "example": "555-555-5555"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                }
+            }
+        },
+        "models.UserListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "users": {
+                    "description": "/ List of users",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.UserDto"
+                    }
+                }
+            }
+        },
+        "models.UserResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/models.UserDto"
+                }
+            }
+        },
+        "models.UserUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john.doe@gmail.com"
+                },
+                "firstName": {
+                    "type": "string",
+                    "example": "John"
+                },
+                "gsm": {
+                    "type": "string",
+                    "example": "555-555-5555"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "lastName": {
+                    "type": "string",
+                    "example": "Doe"
+                }
+            }
+        },
+        "models.UserUpdateResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "errorMessage": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/models.UserDto"
+                }
+            }
+        }
+    }
+}

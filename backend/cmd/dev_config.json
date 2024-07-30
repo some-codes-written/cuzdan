@@ -1,0 +1,20 @@
+{
+    "Env": {
+        "TYPE": "dev",
+        "BASEURL": "app api url"
+    },
+    "DatabaseConfig": {
+        "Name": "immortality",
+        "Host": "localhost",
+        "Username": "postgres",
+        "Password": "saricamou2",
+        "Port": "5432"
+    },
+    "NameValues": [
+        {
+            "ID": "1",
+            "Name": "temp",
+            "Value": "1"
+        }
+    ]
+}

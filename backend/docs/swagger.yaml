@@ -1,0 +1,558 @@
+definitions:
+  models.AuthRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  models.AuthResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+    type: object
+  models.CurrentTokensResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+    type: object
+  models.ExpireAllTokensResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+    type: object
+  models.ExpireTokenRequest:
+    properties:
+      token:
+        type: string
+    type: object
+  models.ExpireTokenResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+    type: object
+  models.PersonDto:
+    properties:
+      birth_date:
+        type: string
+      birth_place:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      gsm:
+        type: string
+      id:
+        type: integer
+      id_number:
+        type: string
+      last_name:
+        type: string
+      phone:
+        type: string
+    type: object
+  models.PersonListResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      persons:
+        items:
+          $ref: '#/definitions/models.PersonDto'
+        type: array
+      status:
+        type: string
+    type: object
+  models.PersonResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      person:
+        $ref: '#/definitions/models.PersonDto'
+      status:
+        type: string
+    type: object
+  models.TokenExistsRequest:
+    properties:
+      token:
+        type: string
+    type: object
+  models.TokenExistsResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      exists:
+        description: / Token exists or not
+        type: boolean
+      status:
+        type: string
+    type: object
+  models.UserCreateRequest:
+    properties:
+      email:
+        description: / User email
+        example: john.doe@gmail.com
+        type: string
+      firstName:
+        description: / User first name
+        example: John
+        type: string
+      gsm:
+        description: / User GSM
+        example: 555-555-5555
+        type: string
+      lastName:
+        description: / User last name
+        example: Doe
+        type: string
+      password:
+        description: / User password
+        example: "123456"
+        type: string
+    type: object
+  models.UserDeleteResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+    type: object
+  models.UserDto:
+    properties:
+      email:
+        example: john.doe@gmail.com
+        type: string
+      firstName:
+        example: John
+        type: string
+      gsm:
+        example: 555-555-5555
+        type: string
+      id:
+        example: 1
+        type: integer
+      lastName:
+        example: Doe
+        type: string
+    type: object
+  models.UserListResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+      users:
+        description: / List of users
+        items:
+          $ref: '#/definitions/models.UserDto'
+        type: array
+    type: object
+  models.UserResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+      user:
+        $ref: '#/definitions/models.UserDto'
+    type: object
+  models.UserUpdateRequest:
+    properties:
+      email:
+        example: john.doe@gmail.com
+        type: string
+      firstName:
+        example: John
+        type: string
+      gsm:
+        example: 555-555-5555
+        type: string
+      id:
+        example: 1
+        type: integer
+      lastName:
+        example: Doe
+        type: string
+    type: object
+  models.UserUpdateResponse:
+    properties:
+      data: {}
+      errorMessage:
+        type: string
+      status:
+        type: string
+      user:
+        $ref: '#/definitions/models.UserDto'
+    type: object
+info:
+  contact: {}
+paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: auth for token
+      parameters:
+      - description: request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.AuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: "true"
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+        "401":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+        "404":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+        "500":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.AuthResponse'
+      summary: auth for token
+      tags:
+      - auth
+  /auth/current_tokens:
+    get:
+      consumes:
+      - application/json
+      description: current tokens
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: "true"
+          schema:
+            $ref: '#/definitions/models.CurrentTokensResponse'
+        "401":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.CurrentTokensResponse'
+        "404":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.CurrentTokensResponse'
+        "500":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.CurrentTokensResponse'
+      summary: current tokens
+      tags:
+      - auth
+  /auth/expire_all_tokens:
+    get:
+      consumes:
+      - application/json
+      description: expire all tokens
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: "true"
+          schema:
+            $ref: '#/definitions/models.ExpireAllTokensResponse'
+        "401":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.ExpireAllTokensResponse'
+        "404":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.ExpireAllTokensResponse'
+        "500":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.ExpireAllTokensResponse'
+      summary: expire all tokens
+      tags:
+      - auth
+  /auth/expire_token:
+    post:
+      consumes:
+      - application/json
+      description: expire token
+      parameters:
+      - description: request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ExpireTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: "true"
+          schema:
+            $ref: '#/definitions/models.ExpireTokenResponse'
+        "401":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.ExpireTokenResponse'
+        "404":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.ExpireTokenResponse'
+        "500":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.ExpireTokenResponse'
+      summary: expire token
+      tags:
+      - auth
+  /auth/token_exists:
+    post:
+      consumes:
+      - application/json
+      description: token exists
+      parameters:
+      - description: request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.TokenExistsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: "true"
+          schema:
+            $ref: '#/definitions/models.TokenExistsResponse'
+        "401":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.TokenExistsResponse'
+        "404":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.TokenExistsResponse'
+        "500":
+          description: "false"
+          schema:
+            $ref: '#/definitions/models.TokenExistsResponse'
+      summary: token exists
+      tags:
+      - auth
+  /persons/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a person
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PersonResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.PersonResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.PersonResponse'
+      summary: Get a person
+      tags:
+      - person
+  /persons/list:
+    get:
+      consumes:
+      - application/json
+      description: Get all persons
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PersonListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.PersonListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.PersonListResponse'
+      summary: Get all persons
+      tags:
+      - persons
+  /users/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a user
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+      summary: Create a user
+      tags:
+      - users
+  /users/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserDeleteResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.UserDeleteResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.UserDeleteResponse'
+      summary: Delete a user
+      tags:
+      - users
+  /users/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.UserResponse'
+      summary: Get a user
+      tags:
+      - users
+  /users/list:
+    get:
+      consumes:
+      - application/json
+      description: Get all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.UserListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.UserListResponse'
+      summary: Get all users
+      tags:
+      - users
+  /users/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update a user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserUpdateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.UserUpdateResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.UserUpdateResponse'
+      summary: Update a user
+      tags:
+      - users
+swagger: "2.0"
