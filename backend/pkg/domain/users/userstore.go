@@ -143,7 +143,7 @@ func (s *UserStore) GenerateToken(model *User) (*UserToken, error) {
 	token := common.GenerateToken()
 	tokenModel := &UserToken{
 		Token:          token,
-		UserId:         model.ID,
+		UserID:         model.ID,
 		ExpirationDate: time.Now().Add(time.Hour * 24 * 7),
 		IsActive:       true,
 	}

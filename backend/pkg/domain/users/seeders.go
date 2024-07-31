@@ -22,7 +22,7 @@ func SeedUser(db *gorm.DB) error {
 			Gsm:       "",
 			FirstName: "Oğuz",
 			LastName:  "Sarıçam",
-			PersonId:  person.ID,
+			PersonID:  person.ID,
 		}
 		user.SetDefaultsviaCreation()
 		if err := tx.Create(&user).Error; err != nil {
@@ -30,7 +30,7 @@ func SeedUser(db *gorm.DB) error {
 		}
 
 		cre := Credential{
-			UserId:   1,
+			UserID:   1,
 			Username: "ouzsrcm",
 			Email:    "oguzhan.saricam@gmail.com",
 			Password: "123456",

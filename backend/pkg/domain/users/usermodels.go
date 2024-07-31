@@ -16,7 +16,7 @@ const (
 // User
 type User struct {
 	common.EntityModel
-	PersonId      uint            `json:"personId" example:"1"`              // Person
+	PersonID      uint            `json:"personId" example:"1"`              // Person
 	Person        *persons.Person `json:"person" gorm:"foreignKey:PersonId"` // Person
 	Email         string          `json:"email" example:"john.doe@gmail.com"`
 	Gsm           string          `json:"gsm" example:"555-555-5555"`
@@ -30,7 +30,7 @@ type User struct {
 // Credential
 type Credential struct {
 	common.EntityModel
-	UserId   uint   `json:"userId" example:"1"`
+	UserID   uint   `json:"userId" example:"1"`
 	User     *User  `json:"user" gorm:"foreignKey:UserId"`
 	Username string `json:"username" example:"ouzsrcm"`
 	Email    string `json:"email" example:"john.doe@gmail.com"`
@@ -40,7 +40,7 @@ type Credential struct {
 // CredentialChange
 type CredentialChange struct {
 	common.EntityModel
-	UserId       uint        `json:"userId" example:"1"`
+	UserID       uint        `json:"userId" example:"1"`
 	User         *User       `json:"user" gorm:"foreignKey:UserId"` // User
 	CredentialId string      `json:"credentialId" example:"1"`
 	Credential   *Credential `json:"credential" gorm:"foreignKey:CredentialId"`
@@ -55,7 +55,7 @@ type CredentialChange struct {
 // UserToken
 type UserToken struct {
 	common.EntityModel
-	UserId         uint      `json:"userId" example:"1"`
+	UserID         uint      `json:"userId" example:"1"`
 	User           *User     `json:"user" gorm:"foreignKey:UserId"`
 	Token          string    `json:"token" example:"UUID"` // UUID
 	ExpirationDate time.Time `json:"expirationDate" example:"2021-01-01T00:00:00Z"`
