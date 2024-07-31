@@ -1,7 +1,7 @@
 package initializer
 
 import (
-	"immortality/internal/jobs"
+	"immortality/pkg/domain/accounting"
 	"immortality/pkg/domain/commonbi"
 	"immortality/pkg/domain/company"
 	"immortality/pkg/domain/persons"
@@ -10,25 +10,16 @@ import (
 
 func Initialize() {
 
-	var models []interface{}
+	users.SetupDatabase()
 
-	models = append(models, users.GetInterfaces()...)
-	models = append(models, persons.GetInterfaces()...)
-	models = append(models, commonbi.GetInterfaces()...)
-	models = append(models, company.GetInterfaces()...)
+	persons.SetupDatabase()
 
-	store := NewInitStore()
-	store.Initialize(models...)
+	company.SetupDatabase()
+
+	commonbi.SetupDatabase()
+
+	accounting.SetupDatabase()
 
 	//jobs.Schedule()
-
-	commonbi.SeedCurrency(store.Db)
-
-	persons.SeedPerson(store.Db)
-
-	users.SeedUser(store.Db)
-
-	company.SeedCompany(store.Db)
-
-	jobs.RunAllOneTime()
+	// jobs.RunAllOneTime()
 }

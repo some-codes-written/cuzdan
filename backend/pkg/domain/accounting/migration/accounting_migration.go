@@ -16,7 +16,7 @@ func Setup() {
 }
 
 func SeedingDatabase() {
-
+	//TODO:
 }
 
 func GetInterfaces() []interface{} {
@@ -26,7 +26,9 @@ func GetInterfaces() []interface{} {
 		&models.ExpenseType{},
 		&models.Accounting{},
 		&models.CashflowType{},
-		&models.Cashflow{})
+		&models.Cashflow{},
+		&models.CashflowAccountingDetail{},
+	)
 }
 
 func MigrateDatabase(dst ...interface{}) error {

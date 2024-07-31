@@ -2,13 +2,13 @@ package company
 
 import "immortality/database"
 
-func Setup() {
+func SetupDatabase() {
 
 	dst := GetInterfaces()
 
 	MigrateDatabase(dst...)
 
-	// SeedingDatabase()
+	SeedingDatabase()
 }
 
 func SeedingDatabase() {

@@ -1,14 +1,29 @@
 package commonbi
 
-import "immortality/database"
+import (
+	"immortality/database"
+)
 
-func Setup() {
+func SetupDatabase() {
 
 	dst := GetInterfaces()
 
 	MigrateDatabase(dst...)
 
-	// SeedingDatabase()
+	SeedingDatabase()
+
+}
+
+func SeedingDatabase() {
+
+	db, err := database.Connect()
+	if err != nil {
+		panic(err)
+	}
+
+	SeedCurrency(db)
+
+	//TODO: Add more seed functions here
 }
 
 func GetInterfaces() []interface{} {
