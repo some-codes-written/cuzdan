@@ -6,6 +6,15 @@ import (
 	"time"
 )
 
+const (
+	ACCOUNTINGTYPE           = "accounting_type"
+	EXPENSETYPE              = "expense_type"
+	ACCOUNTING               = "accounting"
+	CASHFLOWTYPE             = "cashflow_type"
+	CASHFLOW                 = "cashflow"
+	CASHFLOWACCOUNTINGDETAIL = "cashflow_accounting_detail"
+)
+
 // hesap turu gelir mi gider mi ?
 type AccountingType struct {
 	common.EntityModel
