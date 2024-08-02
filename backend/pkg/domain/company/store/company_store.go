@@ -18,6 +18,21 @@ func NewCompanyStore() *CompanyStore {
 	return store
 }
 
+func (store *CompanyStore) GetCompany(id int) error {
+	company := models.Company{}
+	res := store.Db.Transaction(func(tx *gorm.DB) error {
+		err := tx.Where("id = ?", id).First(&company).Error
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	if res != nil {
+		return res
+	}
+	return nil
+}
+
 func (store *CompanyStore) CreateCompany(model dtos.CompanyDto) error {
 
 	res := store.Db.Transaction(func(tx *gorm.DB) error {

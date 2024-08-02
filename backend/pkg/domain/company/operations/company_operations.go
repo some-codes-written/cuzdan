@@ -31,3 +31,14 @@ func (store *CompanyOperations) CreateCompany(company dtos.CompanyDto) error {
 
 	return nil
 }
+
+func (store *CompanyOperations) GetCompany(id int) error {
+
+	err := store.GetCompany(id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
