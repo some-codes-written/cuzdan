@@ -1,4 +1,4 @@
-package validators
+package company_validators
 
 import (
 	"errors"

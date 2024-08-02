@@ -1,4 +1,4 @@
-package store
+package accounting_store
 
 import "immortality/pkg/common"
 

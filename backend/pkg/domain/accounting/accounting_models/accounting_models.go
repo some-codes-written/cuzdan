@@ -1,8 +1,8 @@
-package models
+package accounting_models
 
 import (
 	"immortality/pkg/common"
-	"immortality/pkg/domain/persons"
+	"immortality/pkg/domain/persons/person_models"
 	"time"
 )
 
@@ -37,16 +37,16 @@ type ExpenseType struct {
 type Accounting struct {
 	common.EntityModel
 
-	ExpenseTypeID    uint            `json:"expenseTypeId" example:"1"` // ExpenseType
-	ExpenseType      *ExpenseType    `json:"expenseType" gorm:"foreignKey:ExpenseTypeID"`
-	AccountingTypeID uint            `json:"accountingTypeId" example:"1"` // AccountingType
-	AccountingType   *AccountingType `json:"accountingType" gorm:"foreignKey:AccountingTypeId"`
-	PersonId         uint            `json:"personId" example:"1"`              // Person
-	Person           *persons.Person `json:"person" gorm:"foreignKey:PersonId"` // Person
-	Description      string          `json:"description" example:"description"`
-	Amount           float64         `json:"amount" example:"100.00"`
-	CurrentTotal     float64         `json:"currentTotal" example:"100.00"`
-	ProcessDate      time.Time       `json:"processDate" example:"2021-01-01T00:00:00Z"`
+	ExpenseTypeID    uint                  `json:"expenseTypeId" example:"1"` // ExpenseType
+	ExpenseType      *ExpenseType          `json:"expenseType" gorm:"foreignKey:ExpenseTypeID"`
+	AccountingTypeID uint                  `json:"accountingTypeId" example:"1"` // AccountingType
+	AccountingType   *AccountingType       `json:"accountingType" gorm:"foreignKey:AccountingTypeId"`
+	PersonId         uint                  `json:"personId" example:"1"`              // Person
+	Person           *person_models.Person `json:"person" gorm:"foreignKey:PersonId"` // Person
+	Description      string                `json:"description" example:"description"`
+	Amount           float64               `json:"amount" example:"100.00"`
+	CurrentTotal     float64               `json:"currentTotal" example:"100.00"`
+	ProcessDate      time.Time             `json:"processDate" example:"2021-01-01T00:00:00Z"`
 }
 
 // gider yada gelir turu.

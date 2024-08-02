@@ -1,4 +1,4 @@
-package store
+package company_store
 
 import (
 	"immortality/pkg/common"

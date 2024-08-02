@@ -1,8 +1,8 @@
-package migration
+package accounting_migration
 
 import (
 	"immortality/database"
-	"immortality/pkg/domain/accounting/models"
+	"immortality/pkg/domain/accounting/accounting_models"
 )
 
 func Setup() {
@@ -22,12 +22,12 @@ func SeedingDatabase() {
 func GetInterfaces() []interface{} {
 	temp_models := make([]interface{}, 0)
 	return append(temp_models,
-		&models.AccountingType{},
-		&models.ExpenseType{},
-		&models.Accounting{},
-		&models.CashflowType{},
-		&models.Cashflow{},
-		&models.CashflowAccountingDetail{},
+		&accounting_models.AccountingType{},
+		&accounting_models.ExpenseType{},
+		&accounting_models.Accounting{},
+		&accounting_models.CashflowType{},
+		&accounting_models.Cashflow{},
+		&accounting_models.CashflowAccountingDetail{},
 	)
 }
 

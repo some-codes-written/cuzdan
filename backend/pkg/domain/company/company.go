@@ -3,6 +3,7 @@ package company
 import (
 	"immortality/database"
 	"immortality/pkg/domain/company/company_models"
+	"immortality/pkg/domain/company/company_seeders"
 )
 
 func SetupDatabase() {
@@ -19,7 +20,7 @@ func SeedingDatabase() {
 	if err != nil {
 		panic(err)
 	}
-	SeedCompany(db)
+	company_seeders.SeedCompany(db)
 }
 
 func GetInterfaces() []interface{} {

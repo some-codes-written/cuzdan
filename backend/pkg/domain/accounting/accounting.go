@@ -1,7 +1,7 @@
 package accounting
 
-import "immortality/pkg/domain/accounting/migration"
+import "immortality/pkg/domain/accounting/accounting_migration"
 
 func SetupDatabase() {
-	migration.Setup()
+	accounting_migration.Setup()
 }

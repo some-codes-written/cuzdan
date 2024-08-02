@@ -1,15 +1,11 @@
-package validators
+package accounting_validators
 
 import (
 	"errors"
-	"immortality/pkg/domain/accounting/models"
+	"immortality/pkg/domain/accounting/accounting_models"
 )
 
-func ValidateAccounting(s models.Accounting) (error, bool) {
-
-	if (s == models.Accounting{}) {
-		return errors.New("accounting is empty"), false
-	}
+func ValidateAccounting(s accounting_models.Accounting) (error, bool) {
 
 	if s.AccountingTypeID == 0 {
 		return errors.New("accountingTypeID is empty"), false
