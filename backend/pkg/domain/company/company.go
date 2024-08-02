@@ -1,6 +1,9 @@
 package company
 
-import "immortality/database"
+import (
+	"immortality/database"
+	"immortality/pkg/domain/company/models"
+)
 
 func SetupDatabase() {
 
@@ -20,8 +23,13 @@ func SeedingDatabase() {
 }
 
 func GetInterfaces() []interface{} {
-	models := make([]interface{}, 0)
-	return append(models, &Company{}, &CompanyType{}, &CompanyPerson{}, &CompanyPersonType{})
+	temp := make([]interface{}, 0)
+	return append(temp,
+		&models.Company{},
+		&models.CompanyType{},
+		&models.CompanyPerson{},
+		&models.CompanyPersonType{},
+	)
 }
 
 func MigrateDatabase(dst ...interface{}) error {

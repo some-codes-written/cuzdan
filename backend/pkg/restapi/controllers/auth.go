@@ -193,7 +193,7 @@ func CurrentTokens(w http.ResponseWriter, r *http.Request) {
 	}
 	tokens := make(map[string]uint)
 	for _, token := range res {
-		tokens[token.Token] = token.UserId
+		tokens[token.Token] = token.UserID
 	}
 	response.Data = tokens
 	response.Status = apibase.ApiStatusSuccess

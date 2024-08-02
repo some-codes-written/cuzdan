@@ -67,7 +67,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) (bool, models.UserCreate
 		return false, response
 	}
 
-	credential.UserId = res.ID
+	credential.UserID = res.ID
 	credential.Email = request.Email
 	credential.Password = request.Password
 	credential.CreatedAt = time.Now()
@@ -82,7 +82,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) (bool, models.UserCreate
 
 	response.Credential = models.CredentialDto{
 		ID:     creres.ID,
-		UserId: creres.UserId,
+		UserId: creres.UserID,
 		Email:  creres.Email,
 		//Password:  creres.Password
 	}

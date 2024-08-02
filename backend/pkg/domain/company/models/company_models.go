@@ -1,4 +1,4 @@
-package company
+package models
 
 import (
 	"immortality/pkg/common"
