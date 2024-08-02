@@ -2,7 +2,8 @@ package users
 
 import (
 	"fmt"
-	"immortality/pkg/domain/persons"
+	"immortality/pkg/domain/persons/person_models"
+	"immortality/pkg/domain/users/user_models"
 
 	"gorm.io/gorm"
 )
@@ -11,13 +12,13 @@ func SeedUser(db *gorm.DB) error {
 
 	res := db.Transaction(func(tx *gorm.DB) error {
 
-		var person persons.Person
+		var person person_models.Person
 		err := tx.Where("gsm = ?", "5372112339").First(&person)
 		if err.Error != nil {
 			fmt.Println("err: ", err.Error)
 			return err.Error
 		}
-		user := User{
+		user := user_models.User{
 			Email:     "oguzhan.saricam@gmail.com",
 			Gsm:       "",
 			FirstName: "Oğuz",
@@ -29,7 +30,7 @@ func SeedUser(db *gorm.DB) error {
 			return err
 		}
 
-		cre := Credential{
+		cre := user_models.Credential{
 			UserID:   1,
 			Username: "ouzsrcm",
 			Email:    "oguzhan.saricam@gmail.com",

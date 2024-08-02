@@ -2,8 +2,8 @@ package company
 
 import (
 	"fmt"
-	"immortality/pkg/domain/company/models"
-	"immortality/pkg/domain/persons"
+	"immortality/pkg/domain/company/company_models"
+	"immortality/pkg/domain/persons/person_models"
 
 	"gorm.io/gorm"
 )
@@ -12,7 +12,7 @@ func SeedCompany(db *gorm.DB) error {
 
 	res := db.Transaction(func(tx *gorm.DB) error {
 
-		companyType := models.CompanyType{
+		companyType := company_models.CompanyType{
 			Name: "Organization",
 		}
 		companyType.SetDefaultsviaCreation()
@@ -20,14 +20,14 @@ func SeedCompany(db *gorm.DB) error {
 			return err
 		}
 
-		var person persons.Person
+		var person person_models.Person
 		err := tx.Where("gsm = ?", "5372112339").First(&person)
 		if err.Error != nil {
 			fmt.Println("err: ", err.Error)
 			return err.Error
 		}
 
-		company := models.Company{
+		company := company_models.Company{
 			CompanyTypeID: companyType.ID,
 			Name:          "General",
 			Description:   "General Description",
@@ -42,7 +42,7 @@ func SeedCompany(db *gorm.DB) error {
 		if err := tx.Create(&company).Error; err != nil {
 			return err
 		}
-		indivCompanyType := models.CompanyType{
+		indivCompanyType := company_models.CompanyType{
 			Name: "Individual",
 		}
 		indivCompanyType.SetDefaultsviaCreation()
@@ -50,7 +50,7 @@ func SeedCompany(db *gorm.DB) error {
 			return err
 		}
 
-		companyPersonType := models.CompanyPersonType{
+		companyPersonType := company_models.CompanyPersonType{
 			Name: "Owner",
 		}
 		companyPersonType.SetDefaultsviaCreation()

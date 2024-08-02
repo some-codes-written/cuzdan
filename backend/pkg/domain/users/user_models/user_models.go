@@ -1,8 +1,8 @@
-package users
+package user_models
 
 import (
 	"immortality/pkg/common"
-	"immortality/pkg/domain/persons"
+	"immortality/pkg/domain/persons/person_models"
 	"time"
 )
 
@@ -16,15 +16,15 @@ const (
 // User
 type User struct {
 	common.EntityModel
-	PersonID      uint            `json:"personId" example:"1"`              // Person
-	Person        *persons.Person `json:"person" gorm:"foreignKey:PersonId"` // Person
-	Email         string          `json:"email" example:"john.doe@gmail.com"`
-	Gsm           string          `json:"gsm" example:"555-555-5555"`
-	FirstName     string          `json:"firstName" example:"John"`
-	LastName      string          `json:"lastName" example:"Doe"`
-	LastLoginDate time.Time       `json:"lastLoginDate" example:"2021-01-01T00:00:00Z"`
-	UserToken     *[]UserToken    `json:"userToken" gorm:"foreignKey:UserId"`
-	Credential    *[]Credential   `json:"credential" gorm:"foreignKey:UserId"`
+	PersonID      uint                  `json:"personId" example:"1"`              // Person
+	Person        *person_models.Person `json:"person" gorm:"foreignKey:PersonId"` // Person
+	Email         string                `json:"email" example:"john.doe@gmail.com"`
+	Gsm           string                `json:"gsm" example:"555-555-5555"`
+	FirstName     string                `json:"firstName" example:"John"`
+	LastName      string                `json:"lastName" example:"Doe"`
+	LastLoginDate time.Time             `json:"lastLoginDate" example:"2021-01-01T00:00:00Z"`
+	UserToken     *[]UserToken          `json:"userToken" gorm:"foreignKey:UserId"`
+	Credential    *[]Credential         `json:"credential" gorm:"foreignKey:UserId"`
 }
 
 // Credential

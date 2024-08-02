@@ -1,4 +1,4 @@
-package persons
+package person_models
 
 import (
 	"immortality/pkg/common"

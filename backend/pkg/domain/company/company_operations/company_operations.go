@@ -1,7 +1,7 @@
-package operations
+package company_operations
 
 import (
-	"immortality/pkg/domain/company/dtos"
+	"immortality/pkg/domain/company/company_dtos"
 	"immortality/pkg/domain/company/store"
 	"immortality/pkg/domain/company/validators"
 )
@@ -16,7 +16,7 @@ func NewCompanyOperations() *CompanyOperations {
 	}
 }
 
-func (store *CompanyOperations) CreateCompany(company dtos.CompanyDto) error {
+func (store *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) error {
 
 	err := validators.ValidateCompany(company)
 	if err != nil {

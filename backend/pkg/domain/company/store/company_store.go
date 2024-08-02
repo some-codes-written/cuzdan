@@ -2,8 +2,8 @@ package store
 
 import (
 	"immortality/pkg/common"
-	"immortality/pkg/domain/company/dtos"
-	"immortality/pkg/domain/company/models"
+	"immortality/pkg/domain/company/company_dtos"
+	"immortality/pkg/domain/company/company_models"
 
 	"gorm.io/gorm"
 )
@@ -19,7 +19,7 @@ func NewCompanyStore() *CompanyStore {
 }
 
 func (store *CompanyStore) GetCompany(id int) error {
-	company := models.Company{}
+	company := company_models.Company{}
 	res := store.Db.Transaction(func(tx *gorm.DB) error {
 		err := tx.Where("id = ?", id).First(&company).Error
 		if err != nil {
@@ -33,13 +33,13 @@ func (store *CompanyStore) GetCompany(id int) error {
 	return nil
 }
 
-func (store *CompanyStore) CreateCompany(model dtos.CompanyDto) error {
+func (store *CompanyStore) CreateCompany(model company_dtos.CompanyDto) error {
 
 	res := store.Db.Transaction(func(tx *gorm.DB) error {
 
 		//TODO: Add db validation
 		//TODO: add automapper
-		company := models.Company{
+		company := company_models.Company{
 			CompanyTypeID: model.CompanyTypeID,
 			Name:          model.Name,
 			Description:   model.Description,

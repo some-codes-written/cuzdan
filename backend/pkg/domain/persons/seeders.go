@@ -1,6 +1,7 @@
 package persons
 
 import (
+	"immortality/pkg/domain/persons/person_models"
 	"time"
 
 	"gorm.io/gorm"
@@ -9,7 +10,7 @@ import (
 func SeedPerson(db *gorm.DB) {
 	db.Transaction(func(tx *gorm.DB) error {
 
-		person := Person{
+		person := person_models.Person{
 			FirstName: "Oğuz",
 			LastName:  "Sarıçam",
 			Gsm:       "5372112339",

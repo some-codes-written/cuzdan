@@ -2,10 +2,10 @@ package validators
 
 import (
 	"errors"
-	"immortality/pkg/domain/company/dtos"
+	"immortality/pkg/domain/company/company_dtos"
 )
 
-func ValidateCompany(company dtos.CompanyDto) error {
+func ValidateCompany(company company_dtos.CompanyDto) error {
 	if company.CompanyTypeID == 0 {
 		return errors.New("company type id is required")
 	}

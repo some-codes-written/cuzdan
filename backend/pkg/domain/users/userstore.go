@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"immortality/pkg/common"
+	"immortality/pkg/domain/users/user_models"
 
 	"gorm.io/gorm"
 )
@@ -21,17 +22,17 @@ func NewUserStore() *UserStore {
 
 func (s *UserStore) VerifyCredential(email string, password string) (bool, error) {
 
-	var user *User
+	var user *user_models.User
 	var res *gorm.DB
 
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 
-		res = tx.Where("email = ?", email).Table(USERS).First(&user)
+		res = tx.Where("email = ?", email).Table(user_models.USERS).First(&user)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("user not found")
 		}
-		var credentials *Credential
-		res = tx.Where("user_id = ?", user.ID).Table(CREDENTIALS).First(&credentials)
+		var credentials *user_models.Credential
+		res = tx.Where("user_id = ?", user.ID).Table(user_models.CREDENTIALS).First(&credentials)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("credentials not found")
 		}
@@ -46,11 +47,11 @@ func (s *UserStore) VerifyCredential(email string, password string) (bool, error
 	return true, nil
 }
 
-func (s *UserStore) GetUser(id uint) (*User, error) {
-	var user *User
+func (s *UserStore) GetUser(id uint) (*user_models.User, error) {
+	var user *user_models.User
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 
-		res := tx.First(&User{}, id).Table(USERS)
+		res := tx.First(&user_models.User{}, id).Table(user_models.USERS)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("User not found")
 		}
@@ -63,10 +64,10 @@ func (s *UserStore) GetUser(id uint) (*User, error) {
 	return user, nil
 }
 
-func (s *UserStore) GetUserByEmail(email string) (*User, error) {
-	var user *User
+func (s *UserStore) GetUserByEmail(email string) (*user_models.User, error) {
+	var user *user_models.User
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("email = ?", email).Table(USERS).First(&user)
+		res := tx.Where("email = ?", email).Table(user_models.USERS).First(&user)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("User not found")
 		}
@@ -79,9 +80,9 @@ func (s *UserStore) GetUserByEmail(email string) (*User, error) {
 }
 
 func (s *UserStore) UserIfExistsByEmail(email string) (bool, error) {
-	var user *User
+	var user *user_models.User
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("email = ?", email).Table(USERS).First(&user)
+		res := tx.Where("email = ?", email).Table(user_models.USERS).First(&user)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("user not found")
 		}
@@ -94,9 +95,9 @@ func (s *UserStore) UserIfExistsByEmail(email string) (bool, error) {
 }
 
 func (s *UserStore) UserIfExistsByGsm(gsm string) (bool, error) {
-	var user *User
+	var user *user_models.User
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("gsm = ?", gsm).Table(USERS).First(&user)
+		res := tx.Where("gsm = ?", gsm).Table(user_models.USERS).First(&user)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("user not found")
 		}
@@ -108,8 +109,8 @@ func (s *UserStore) UserIfExistsByGsm(gsm string) (bool, error) {
 	return true, nil
 }
 
-func (s *UserStore) CreateUser(model *User) (*User, error) {
-	var user *User
+func (s *UserStore) CreateUser(model *user_models.User) (*user_models.User, error) {
+	var user *user_models.User
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 		res := tx.Create(&model)
 		if res.Error != nil {
@@ -124,10 +125,10 @@ func (s *UserStore) CreateUser(model *User) (*User, error) {
 	return user, nil
 }
 
-func (s *UserStore) GetUsers() ([]User, error) {
-	var users []User
+func (s *UserStore) GetUsers() ([]user_models.User, error) {
+	var users []user_models.User
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Table(USERS).Find(&users)
+		res := tx.Table(user_models.USERS).Find(&users)
 		if res.Error != nil {
 			return res.Error
 		}
@@ -139,9 +140,9 @@ func (s *UserStore) GetUsers() ([]User, error) {
 	return users, nil
 }
 
-func (s *UserStore) GenerateToken(model *User) (*UserToken, error) {
+func (s *UserStore) GenerateToken(model *user_models.User) (*user_models.UserToken, error) {
 	token := common.GenerateToken()
-	tokenModel := &UserToken{
+	tokenModel := &user_models.UserToken{
 		Token:          token,
 		UserID:         model.ID,
 		ExpirationDate: time.Now().Add(time.Hour * 24 * 7),
@@ -155,8 +156,8 @@ func (s *UserStore) GenerateToken(model *User) (*UserToken, error) {
 	return tokenModel, nil
 }
 
-func (s *UserStore) GetToken(token string) (*UserToken, error) {
-	var tokenModel *UserToken
+func (s *UserStore) GetToken(token string) (*user_models.UserToken, error) {
+	var tokenModel *user_models.UserToken
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 		res := tx.Where("token = ?", token).Where("is_active = ?", 1).Table("user_tokens").First(&tokenModel)
 		if res.Error != nil {
@@ -170,8 +171,8 @@ func (s *UserStore) GetToken(token string) (*UserToken, error) {
 	return tokenModel, nil
 }
 
-func (s *UserStore) GetTokens() ([]*UserToken, error) {
-	var tokens []*UserToken
+func (s *UserStore) GetTokens() ([]*user_models.UserToken, error) {
+	var tokens []*user_models.UserToken
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 		res := tx.Table("user_tokens").Where("is_active = ?", 1).Find(&tokens)
 		if res.Error != nil {
@@ -185,8 +186,8 @@ func (s *UserStore) GetTokens() ([]*UserToken, error) {
 	return tokens, nil
 }
 
-func (s *UserStore) ExpireToken(token string) (*UserToken, error) {
-	var tokenModel *UserToken
+func (s *UserStore) ExpireToken(token string) (*user_models.UserToken, error) {
+	var tokenModel *user_models.UserToken
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 		res := tx.Where("token = ?", token).Table("user_tokens").First(&tokenModel)
 		if res.Error != nil {
@@ -207,8 +208,8 @@ func (s *UserStore) ExpireToken(token string) (*UserToken, error) {
 	return tokenModel, nil
 }
 
-func (s *UserStore) CreateCredential(model *Credential) (*Credential, error) {
-	var credential *Credential
+func (s *UserStore) CreateCredential(model *user_models.Credential) (*user_models.Credential, error) {
+	var credential *user_models.Credential
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 		model.SetDefaultsviaCreation()
 		res := tx.Create(&model)
@@ -224,10 +225,10 @@ func (s *UserStore) CreateCredential(model *Credential) (*Credential, error) {
 	return credential, nil
 }
 
-func (s *UserStore) GetCredential(id uint) (*Credential, error) {
-	var credential *Credential
+func (s *UserStore) GetCredential(id uint) (*user_models.Credential, error) {
+	var credential *user_models.Credential
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("id = ?", id).Table(CREDENTIALS).First(&credential)
+		res := tx.Where("id = ?", id).Table(user_models.CREDENTIALS).First(&credential)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("Credential not found")
 		}
@@ -239,10 +240,10 @@ func (s *UserStore) GetCredential(id uint) (*Credential, error) {
 	return credential, nil
 }
 
-func (s *UserStore) GetCredentials() ([]Credential, error) {
-	var credentials []Credential
+func (s *UserStore) GetCredentials() ([]user_models.Credential, error) {
+	var credentials []user_models.Credential
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Table(CREDENTIALS).Find(&credentials)
+		res := tx.Table(user_models.CREDENTIALS).Find(&credentials)
 		if res.Error != nil {
 			return res.Error
 		}
@@ -254,10 +255,10 @@ func (s *UserStore) GetCredentials() ([]Credential, error) {
 	return credentials, nil
 }
 
-func (s *UserStore) GetCredentialsByUserId(userId uint) ([]Credential, error) {
-	var credentials []Credential
+func (s *UserStore) GetCredentialsByUserId(userId uint) ([]user_models.Credential, error) {
+	var credentials []user_models.Credential
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("user_id = ?", userId).Table(CREDENTIALS).Find(&credentials)
+		res := tx.Where("user_id = ?", userId).Table(user_models.CREDENTIALS).Find(&credentials)
 		if res.Error != nil {
 			return res.Error
 		}
@@ -269,8 +270,8 @@ func (s *UserStore) GetCredentialsByUserId(userId uint) ([]Credential, error) {
 	return credentials, nil
 }
 
-func (s *UserStore) UpdateCredential(model *Credential) (*Credential, error) {
-	var credential *Credential
+func (s *UserStore) UpdateCredential(model *user_models.Credential) (*user_models.Credential, error) {
+	var credential *user_models.Credential
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 		model.SetDefaultsviaCreation()
 		res := tx.Save(&model)
@@ -288,7 +289,7 @@ func (s *UserStore) UpdateCredential(model *Credential) (*Credential, error) {
 
 func (s *UserStore) DeleteCredential(id uint) error {
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("id = ?", id).Table(CREDENTIALS).Delete(&Credential{})
+		res := tx.Where("id = ?", id).Table(user_models.CREDENTIALS).Delete(&user_models.Credential{})
 		if res.Error != nil {
 			return res.Error
 		}
@@ -302,7 +303,7 @@ func (s *UserStore) DeleteCredential(id uint) error {
 
 func (s *UserStore) DeleteCredentialsByUserId(userId uint) error {
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("user_id = ?", userId).Table(CREDENTIALS).Delete(&Credential{})
+		res := tx.Where("user_id = ?", userId).Table(user_models.CREDENTIALS).Delete(&user_models.Credential{})
 		if res.Error != nil {
 			return res.Error
 		}
@@ -314,8 +315,8 @@ func (s *UserStore) DeleteCredentialsByUserId(userId uint) error {
 	return nil
 }
 
-func (s *UserStore) UpdateUser(model *User) (*User, error) {
-	var user *User
+func (s *UserStore) UpdateUser(model *user_models.User) (*user_models.User, error) {
+	var user *user_models.User
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 		model.SetDefaultsviaUpdation()
 		res := tx.Save(&model)
@@ -333,7 +334,7 @@ func (s *UserStore) UpdateUser(model *User) (*User, error) {
 
 func (s *UserStore) DeleteUser(id uint) error {
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Where("id = ?", id).Table(USERS).Delete(&User{})
+		res := tx.Where("id = ?", id).Table(user_models.USERS).Delete(&user_models.User{})
 		if res.Error != nil {
 			return res.Error
 		}
@@ -348,7 +349,7 @@ func (s *UserStore) DeleteUser(id uint) error {
 func (s *UserStore) TokenExists(token string) (bool, error) {
 	var exists bool
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
-		res := tx.Model(&UserToken{}).Select("count(*) > 0").Where("token = ?", token).Where("is_active", 1).Find(&exists)
+		res := tx.Model(user_models.UserToken{}).Select("count(*) > 0").Where("token = ?", token).Where("is_active", 1).Find(&exists)
 		if res.Error != nil {
 			return res.Error
 		}

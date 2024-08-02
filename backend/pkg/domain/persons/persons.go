@@ -1,6 +1,9 @@
 package persons
 
-import "immortality/database"
+import (
+	"immortality/database"
+	"immortality/pkg/domain/persons/person_models"
+)
 
 func SetupDatabase() {
 
@@ -22,7 +25,7 @@ func SeedingDatabase() {
 
 func GetInterfaces() []interface{} {
 	models := make([]interface{}, 0)
-	return append(models, &Person{}, &Address{})
+	return append(models, &person_models.Person{}, &person_models.Address{})
 }
 
 func MigrateDatabase(dst ...interface{}) error {

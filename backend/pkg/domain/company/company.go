@@ -2,7 +2,7 @@ package company
 
 import (
 	"immortality/database"
-	"immortality/pkg/domain/company/models"
+	"immortality/pkg/domain/company/company_models"
 )
 
 func SetupDatabase() {
@@ -25,10 +25,10 @@ func SeedingDatabase() {
 func GetInterfaces() []interface{} {
 	temp := make([]interface{}, 0)
 	return append(temp,
-		&models.Company{},
-		&models.CompanyType{},
-		&models.CompanyPerson{},
-		&models.CompanyPersonType{},
+		&company_models.Company{},
+		&company_models.CompanyType{},
+		&company_models.CompanyPerson{},
+		&company_models.CompanyPersonType{},
 	)
 }
 

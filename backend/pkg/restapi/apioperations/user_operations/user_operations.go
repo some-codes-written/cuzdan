@@ -3,6 +3,7 @@ package user_operations
 import (
 	"encoding/json"
 	"immortality/pkg/domain/users"
+	"immortality/pkg/domain/users/user_models"
 	"immortality/pkg/restapi/apibase"
 	"immortality/pkg/restapi/controllers/models"
 	"immortality/util"
@@ -41,8 +42,8 @@ func UserList(w http.ResponseWriter, r *http.Request) (bool, models.UserListResp
 
 func CreateUser(w http.ResponseWriter, r *http.Request) (bool, models.UserCreateResponse) {
 
-	var user users.User
-	var credential users.Credential
+	var user user_models.User
+	var credential user_models.Credential
 	var request models.UserCreateRequest
 	var response models.UserCreateResponse
 

@@ -3,6 +3,7 @@ package persons
 import (
 	"errors"
 	"immortality/pkg/common"
+	"immortality/pkg/domain/persons/person_models"
 
 	"gorm.io/gorm"
 )
@@ -17,11 +18,11 @@ func NewPersonStore() *PersonStore {
 	return store
 }
 
-func (s *PersonStore) GetPerson(id uint) (*Person, error) {
-	var person *Person
+func (s *PersonStore) GetPerson(id uint) (*person_models.Person, error) {
+	var person *person_models.Person
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 
-		res := tx.First(&Person{}, id).Table(PERSONS)
+		res := tx.First(&person_models.Person{}, id).Table(person_models.PERSONS)
 		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
 			return errors.New("Person not found")
 		}
@@ -34,11 +35,11 @@ func (s *PersonStore) GetPerson(id uint) (*Person, error) {
 	return person, nil
 }
 
-func (s *PersonStore) GetPersons() ([]*Person, error) {
-	var persons []*Person
+func (s *PersonStore) GetPersons() ([]*person_models.Person, error) {
+	var persons []*person_models.Person
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 
-		res := tx.Table(PERSONS).Find(&persons)
+		res := tx.Table(person_models.PERSONS).Find(&persons)
 		if res == nil {
 			return res.Error
 		}

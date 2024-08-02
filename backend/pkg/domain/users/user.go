@@ -2,6 +2,7 @@ package users
 
 import (
 	"immortality/database"
+	"immortality/pkg/domain/users/user_models"
 )
 
 func SetupDatabase() {
@@ -25,7 +26,12 @@ func SeedingDatabase() {
 
 func GetInterfaces() []interface{} {
 	models := make([]interface{}, 0)
-	return append(models, &User{}, &Credential{}, &CredentialChange{}, &UserToken{})
+	return append(models,
+		&user_models.User{},
+		&user_models.Credential{},
+		&user_models.CredentialChange{},
+		&user_models.UserToken{},
+	)
 }
 
 func MigrateDatabase(dst ...interface{}) error {

@@ -1,6 +1,9 @@
-package dtos
+package company_dtos
 
-import "immortality/pkg/common"
+import (
+	"immortality/pkg/common"
+	"time"
+)
 
 type CompanyDto struct {
 	common.DTOModel
@@ -18,4 +21,24 @@ type CompanyDto struct {
 type CompanyListDto struct {
 	common.DTOModel
 	Companies []CompanyDto `json:"companies"`
+}
+
+type CompanyTypeDto struct {
+	common.DTOModel
+	Name        string `json:"name" example:"Company Type Name"`               // Company type name
+	Description string `json:"description" example:"Company Type Description"` // Company type description
+}
+
+type CompanyTypeListDto struct {
+	common.DTOModel
+	CompanyTypes []CompanyTypeDto `json:"company_types"`
+}
+
+type CompanyPersonDto struct {
+	common.DTOModel
+
+	CompanyId  uint        `json:"company_id"`  // FK to Company
+	PersonId   uint        `json:"person_id"`   // FK to User
+	AssignDate time.Time   `json:"assign_date"` // Assign date
+	Company    *CompanyDto `json:"company"`     // FK to Company
 }
