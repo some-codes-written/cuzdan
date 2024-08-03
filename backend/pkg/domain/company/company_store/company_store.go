@@ -33,6 +33,27 @@ func (store *CompanyStore) GetCompanyPerson(company_id int) (*[]company_dtos.Com
 
 }
 
+// GetCompanyList gets a list of all companies
+func (store *CompanyStore) GetCompanyList() (*[]company_models.Company, error) {
+
+	res := []company_models.Company{}
+
+	err := store.Db.Transaction(func(tx *gorm.DB) error {
+		err := tx.Table(COMPANIES).Find(&res).Error
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+
+}
+
 // GetCompany gets a company by id
 func (store *CompanyStore) GetCompany(id int) (*company_models.Company, error) {
 

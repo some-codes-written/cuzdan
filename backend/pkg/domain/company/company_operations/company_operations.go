@@ -3,21 +3,7 @@ package company_operations
 import (
 	"immortality/pkg/domain/company/company_dtos"
 	"immortality/pkg/domain/company/company_models"
-	"immortality/pkg/domain/company/company_store"
-	"immortality/pkg/domain/company/company_validators"
 )
-
-type CompanyOperations struct {
-	Store     *company_store.CompanyStore
-	Validator *company_validators.CompanyValidator
-}
-
-func NewCompanyOperations() *CompanyOperations {
-	return &CompanyOperations{
-		Store:     company_store.NewCompanyStore(),
-		Validator: company_validators.NewCompanyValidator(),
-	}
-}
 
 func (ops *CompanyOperations) CreateCompany(model *company_dtos.CompanyDto) error {
 
@@ -47,27 +33,6 @@ func (ops *CompanyOperations) CreateCompany(model *company_dtos.CompanyDto) erro
 	return nil
 }
 
-func (ops *CompanyOperations) CreateCompanyType(model *company_dtos.CompanyTypeDto) (*company_dtos.CompanyTypeDto, error) {
-
-	err := ops.Validator.ValidateCompanyType(model)
-	if err != nil {
-		return nil, err
-	}
-
-	temp := company_models.CompanyType{
-		Name:        model.Name,
-		Description: model.Description,
-	}
-
-	err = ops.Store.CreateCompanyType(&temp)
-	if err != nil {
-		return nil, err
-	}
-
-	return nil, nil
-
-}
-
 func (ops *CompanyOperations) GetCompany(id int) (*company_dtos.CompanyDto, error) {
 
 	res, err := ops.Store.GetCompany(id)
@@ -89,19 +54,27 @@ func (ops *CompanyOperations) GetCompany(id int) (*company_dtos.CompanyDto, erro
 	return &temp, nil
 }
 
-func (ops *CompanyOperations) GetCompanyType(id int) (*company_dtos.CompanyTypeDto, error) {
+func (ops *CompanyOperations) GetCompanyList() (*[]company_dtos.CompanyDto, error) {
 
-	res, err := ops.Store.GetCompanyType(id)
-
+	res, err := ops.Store.GetCompanyList()
 	if err != nil {
-		return &company_dtos.CompanyTypeDto{}, err
+		return nil, err
 	}
 
-	dto := company_dtos.CompanyTypeDto{
-		Name:        res.Name,
-		Description: res.Description,
+	temp := []company_dtos.CompanyDto{}
+	for _, item := range *res {
+		temp = append(temp, company_dtos.CompanyDto{
+			CompanyTypeID: item.CompanyTypeID,
+			Name:          item.Name,
+			Description:   item.Description,
+			Email:         item.Email,
+			Phone:         item.Phone,
+			Website:       item.Website,
+			Address:       item.Address,
+			IsActive:      item.IsActive,
+			AuthPersonId:  item.AuthPersonId,
+		})
 	}
 
-	return &dto, nil
-
+	return &temp, nil
 }
