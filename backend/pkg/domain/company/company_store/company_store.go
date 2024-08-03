@@ -19,10 +19,10 @@ func NewCompanyStore() *CompanyStore {
 
 func (store *CompanyStore) GetCompany(id int) (*company_models.Company, error) {
 
-	company := company_models.Company{}
+	res := company_models.Company{}
 
 	err := store.Db.Transaction(func(tx *gorm.DB) error {
-		err := tx.Where("id = ?", id).First(&company).Error
+		err := tx.Where("id = ?", id).First(&res).Error
 		if err != nil {
 			return err
 		}
@@ -33,19 +33,7 @@ func (store *CompanyStore) GetCompany(id int) (*company_models.Company, error) {
 		return nil, err
 	}
 
-	dto := company_models.Company{
-		CompanyTypeID: company.CompanyTypeID,
-		Name:          company.Name,
-		Description:   company.Description,
-		Email:         company.Email,
-		Phone:         company.Phone,
-		Website:       company.Website,
-		Address:       company.Address,
-		IsActive:      company.IsActive,
-		AuthPersonId:  company.AuthPersonId,
-	}
-
-	return &dto, nil
+	return &res, nil
 
 }
 

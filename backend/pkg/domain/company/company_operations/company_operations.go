@@ -44,17 +44,17 @@ func (ops *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) err
 		return err
 	}
 
-	return nil
+	return true
 }
 
 func (ops *CompanyOperations) GetCompany(id int) error {
 
-	err := ops.Store.GetCompany(id)
+	res, err := ops.Store.GetCompany(id)
 
 	if err != nil {
 		return err
 	}
-
+}
 	return nil
 }
 
