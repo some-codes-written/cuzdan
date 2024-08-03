@@ -2,28 +2,30 @@ package company_operations
 
 import (
 	"immortality/pkg/domain/company/company_dtos"
-	"immortality/pkg/domain/company/store"
-	"immortality/pkg/domain/company/validators"
+	"immortality/pkg/domain/company/company_store"
+	"immortality/pkg/domain/company/company_validators"
 )
 
 type CompanyOperations struct {
-	store *store.CompanyStore
+	Store     *company_store.CompanyStore
+	Validator *company_validators.CompanyValidator
 }
 
 func NewCompanyOperations() *CompanyOperations {
 	return &CompanyOperations{
-		store: store.NewCompanyStore(),
+		Store:     company_store.NewCompanyStore(),
+		Validator: company_validators.NewCompanyValidator(),
 	}
 }
 
-func (store *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) error {
+func (ops *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) error {
 
-	err := validators.ValidateCompany(company)
+	err := ops.Validator.ValidateCompany(company)
 	if err != nil {
 		return err
 	}
 
-	err = store.CreateCompany(company)
+	err = ops.Store.CreateCompany(company)
 
 	if err != nil {
 		return err
@@ -32,9 +34,9 @@ func (store *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) e
 	return nil
 }
 
-func (store *CompanyOperations) GetCompany(id int) error {
+func (ops *CompanyOperations) GetCompany(id int) error {
 
-	err := store.GetCompany(id)
+	err := ops.Store.GetCompany(id)
 
 	if err != nil {
 		return err

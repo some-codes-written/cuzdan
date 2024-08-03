@@ -5,7 +5,14 @@ import (
 	"immortality/pkg/domain/company/company_dtos"
 )
 
-func ValidateCompany(company company_dtos.CompanyDto) error {
+type CompanyValidator struct {
+}
+
+func NewCompanyValidator() *CompanyValidator {
+	return &CompanyValidator{}
+}
+
+func (s *CompanyValidator) ValidateCompany(company company_dtos.CompanyDto) error {
 	if company.CompanyTypeID == 0 {
 		return errors.New("company type id is required")
 	}
