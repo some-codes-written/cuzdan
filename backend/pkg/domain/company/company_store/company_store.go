@@ -2,7 +2,6 @@ package company_store
 
 import (
 	"immortality/pkg/common"
-	"immortality/pkg/domain/company/company_dtos"
 	"immortality/pkg/domain/company/company_models"
 
 	"gorm.io/gorm"
@@ -18,40 +17,45 @@ func NewCompanyStore() *CompanyStore {
 	return store
 }
 
-func (store *CompanyStore) GetCompany(id int) error {
+func (store *CompanyStore) GetCompany(id int) (*company_models.Company, error) {
+
 	company := company_models.Company{}
-	res := store.Db.Transaction(func(tx *gorm.DB) error {
+
+	err := store.Db.Transaction(func(tx *gorm.DB) error {
 		err := tx.Where("id = ?", id).First(&company).Error
 		if err != nil {
 			return err
 		}
 		return nil
 	})
-	if res != nil {
-		return res
+
+	if err != nil {
+		return nil, err
 	}
-	return nil
+
+	dto := company_models.Company{
+		CompanyTypeID: company.CompanyTypeID,
+		Name:          company.Name,
+		Description:   company.Description,
+		Email:         company.Email,
+		Phone:         company.Phone,
+		Website:       company.Website,
+		Address:       company.Address,
+		IsActive:      company.IsActive,
+		AuthPersonId:  company.AuthPersonId,
+	}
+
+	return &dto, nil
+
 }
 
-func (store *CompanyStore) CreateCompany(model company_dtos.CompanyDto) error {
+func (store *CompanyStore) CreateCompany(model *company_models.Company) error {
 
 	res := store.Db.Transaction(func(tx *gorm.DB) error {
 
 		//TODO: Add db validation
-		//TODO: add automapper
-		company := company_models.Company{
-			CompanyTypeID: model.CompanyTypeID,
-			Name:          model.Name,
-			Description:   model.Description,
-			Email:         model.Email,
-			Phone:         model.Phone,
-			Website:       model.Website,
-			Address:       model.Address,
-			IsActive:      model.IsActive,
-			AuthPersonId:  model.AuthPersonId,
-		}
 
-		xres := tx.Create(&company)
+		xres := tx.Create(&model)
 		if xres.Error != nil {
 			return xres.Error
 		}
@@ -64,4 +68,23 @@ func (store *CompanyStore) CreateCompany(model company_dtos.CompanyDto) error {
 	}
 
 	return nil
+}
+
+func (store *CompanyStore) GetCompanyType(id int) (*company_models.CompanyType, error) {
+
+	res := company_models.CompanyType{}
+
+	err := store.Db.Transaction(func(tx *gorm.DB) error {
+		err := tx.Where("id = ?", id).First(&res).Error
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
 }

@@ -2,6 +2,7 @@ package company_operations
 
 import (
 	"immortality/pkg/domain/company/company_dtos"
+	"immortality/pkg/domain/company/company_models"
 	"immortality/pkg/domain/company/company_store"
 	"immortality/pkg/domain/company/company_validators"
 )
@@ -25,7 +26,19 @@ func (ops *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) err
 		return err
 	}
 
-	err = ops.Store.CreateCompany(company)
+	dto := company_models.Company{
+		CompanyTypeID: company.CompanyTypeID,
+		Name:          company.Name,
+		Description:   company.Description,
+		Email:         company.Email,
+		Phone:         company.Phone,
+		Website:       company.Website,
+		Address:       company.Address,
+		IsActive:      company.IsActive,
+		AuthPersonId:  company.AuthPersonId,
+	}
+
+	err = ops.Store.CreateCompany(&dto)
 
 	if err != nil {
 		return err
@@ -43,4 +56,21 @@ func (ops *CompanyOperations) GetCompany(id int) error {
 	}
 
 	return nil
+}
+
+func (ops *CompanyOperations) GetCompanyType(id int) (*company_dtos.CompanyTypeDto, error) {
+
+	res, err := ops.Store.GetCompanyType(id)
+
+	if err != nil {
+		return &company_dtos.CompanyTypeDto{}, err
+	}
+
+	dto := company_dtos.CompanyTypeDto{
+		Name:        res.Name,
+		Description: res.Description,
+	}
+
+	return &dto, nil
+
 }
