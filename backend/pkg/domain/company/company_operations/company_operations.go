@@ -19,23 +19,23 @@ func NewCompanyOperations() *CompanyOperations {
 	}
 }
 
-func (ops *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) error {
+func (ops *CompanyOperations) CreateCompany(model *company_dtos.CompanyDto) error {
 
-	err := ops.Validator.ValidateCompany(company)
+	err := ops.Validator.ValidateCompany(model)
 	if err != nil {
 		return err
 	}
 
 	dto := company_models.Company{
-		CompanyTypeID: company.CompanyTypeID,
-		Name:          company.Name,
-		Description:   company.Description,
-		Email:         company.Email,
-		Phone:         company.Phone,
-		Website:       company.Website,
-		Address:       company.Address,
-		IsActive:      company.IsActive,
-		AuthPersonId:  company.AuthPersonId,
+		CompanyTypeID: model.CompanyTypeID,
+		Name:          model.Name,
+		Description:   model.Description,
+		Email:         model.Email,
+		Phone:         model.Phone,
+		Website:       model.Website,
+		Address:       model.Address,
+		IsActive:      model.IsActive,
+		AuthPersonId:  model.AuthPersonId,
 	}
 
 	err = ops.Store.CreateCompany(&dto)
@@ -44,18 +44,49 @@ func (ops *CompanyOperations) CreateCompany(company company_dtos.CompanyDto) err
 		return err
 	}
 
-	return true
+	return nil
 }
 
-func (ops *CompanyOperations) GetCompany(id int) error {
+func (ops *CompanyOperations) CreateCompanyType(model *company_dtos.CompanyTypeDto) (*company_dtos.CompanyTypeDto, error) {
+
+	err := ops.Validator.ValidateCompanyType(model)
+	if err != nil {
+		return nil, err
+	}
+
+	temp := company_models.CompanyType{
+		Name:        model.Name,
+		Description: model.Description,
+	}
+
+	err = ops.Store.CreateCompanyType(&temp)
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, nil
+
+}
+
+func (ops *CompanyOperations) GetCompany(id int) (*company_dtos.CompanyDto, error) {
 
 	res, err := ops.Store.GetCompany(id)
-
 	if err != nil {
-		return err
+		return nil, err
 	}
-}
-	return nil
+
+	temp := company_dtos.CompanyDto{
+		CompanyTypeID: res.CompanyTypeID,
+		Name:          res.Name,
+		Description:   res.Description,
+		Email:         res.Email,
+		Phone:         res.Phone,
+		Website:       res.Website,
+		Address:       res.Address,
+		IsActive:      res.IsActive,
+		AuthPersonId:  res.AuthPersonId,
+	}
+	return &temp, nil
 }
 
 func (ops *CompanyOperations) GetCompanyType(id int) (*company_dtos.CompanyTypeDto, error) {

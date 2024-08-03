@@ -76,3 +76,20 @@ func (store *CompanyStore) GetCompanyType(id int) (*company_models.CompanyType, 
 
 	return &res, nil
 }
+
+func (store *CompanyStore) CreateCompanyType(model *company_models.CompanyType) error {
+
+	res := store.Db.Transaction(func(tx *gorm.DB) error {
+
+		err := tx.Create(&model)
+		if err.Error != nil {
+			return err.Error
+		}
+		return nil
+	})
+	if res != nil {
+		return res
+	}
+
+	return nil
+}
