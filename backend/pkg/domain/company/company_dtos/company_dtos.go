@@ -37,8 +37,7 @@ type CompanyTypeListDto struct {
 type CompanyPersonDto struct {
 	common.DTOModel
 
-	CompanyId  uint        `json:"company_id"`  // FK to Company
-	PersonId   uint        `json:"person_id"`   // FK to User
-	AssignDate time.Time   `json:"assign_date"` // Assign date
-	Company    *CompanyDto `json:"company"`     // FK to Company
+	CompanyId  uint      `json:"company_id"`  // FK to Company
+	PersonId   uint      `json:"person_id"`   // FK to User
+	AssignDate time.Time `json:"assign_date"` // Assign date
 }
