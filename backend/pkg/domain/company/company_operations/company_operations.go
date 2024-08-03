@@ -78,3 +78,11 @@ func (ops *CompanyOperations) GetCompanyList() (*[]company_dtos.CompanyDto, erro
 
 	return &temp, nil
 }
+
+func (ops *CompanyOperations) RemoveCompany(id int) error {
+	return ops.Store.RemoveCompany(id)
+}
+
+func (ops *CompanyOperations) RemoveCompanyPerson(id int) error {
+	return ops.Store.RemoveCompanyPerson(id)
+}

@@ -155,3 +155,23 @@ func (store *CompanyStore) RemoveCompany(company_id int) error {
 	return nil
 
 }
+
+// FindCompany finds a company by model
+func (store *CompanyStore) FindCompany(model *company_models.Company) (*company_models.Company, error) {
+
+	res := company_models.Company{}
+
+	err := store.Db.Transaction(func(tx *gorm.DB) error {
+		err := tx.Table(COMPANIES).Where(&model).Find(&res).Error
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &res, nil
+}
