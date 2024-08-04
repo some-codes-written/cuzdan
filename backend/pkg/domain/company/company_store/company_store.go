@@ -13,7 +13,7 @@ const (
 )
 
 // GetCompanyPerson gets a company person array by company id
-func (store *CompanyStore) GetCompanyPerson(company_id int) (*[]company_dtos.CompanyPersonDto, error) {
+func (store *CompanyStore) GetCompanyPersonList(company_id int) (*[]company_dtos.CompanyPersonDto, error) {
 
 	temp := []company_dtos.CompanyPersonDto{}
 
