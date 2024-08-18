@@ -1,4 +1,4 @@
-package persons
+package person_seeders
 
 import (
 	"immortality/pkg/domain/persons/person_models"

@@ -1,4 +1,4 @@
-package dtos
+package person_dtos
 
 import (
 	"immortality/pkg/common"

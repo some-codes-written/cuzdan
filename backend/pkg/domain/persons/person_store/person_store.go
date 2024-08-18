@@ -1,22 +1,11 @@
-package persons
+package person_store
 
 import (
 	"errors"
-	"immortality/pkg/common"
 	"immortality/pkg/domain/persons/person_models"
 
 	"gorm.io/gorm"
 )
-
-type PersonStore struct {
-	common.StoreBase
-}
-
-func NewPersonStore() *PersonStore {
-	store := new(PersonStore)
-	store.Connect()
-	return store
-}
 
 func (s *PersonStore) GetPerson(id uint) (*person_models.Person, error) {
 	var person *person_models.Person

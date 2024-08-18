@@ -3,6 +3,7 @@ package persons
 import (
 	"immortality/database"
 	"immortality/pkg/domain/persons/person_models"
+	"immortality/pkg/domain/persons/person_seeders"
 )
 
 func SetupDatabase() {
@@ -20,7 +21,7 @@ func SeedingDatabase() {
 	if err != nil {
 		panic(err)
 	}
-	SeedPerson(db)
+	person_seeders.SeedPerson(db)
 }
 
 func GetInterfaces() []interface{} {

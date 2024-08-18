@@ -1,7 +1,7 @@
 package user_operations
 
 import (
-	"immortality/pkg/domain/persons"
+	"immortality/pkg/domain/persons/person_store"
 	"immortality/pkg/restapi/apibase"
 	"immortality/pkg/restapi/controllers/models"
 	"immortality/util"
@@ -12,7 +12,7 @@ import (
 
 func PersonList(w http.ResponseWriter, r *http.Request) (bool, models.PersonListResponse) {
 
-	personStore := persons.NewPersonStore()
+	personStore := person_store.NewPersonStore()
 	res, err := personStore.GetPersons()
 
 	var persons []models.PersonDto
@@ -46,7 +46,7 @@ func GetPerson(w http.ResponseWriter, r *http.Request) (bool, models.PersonRespo
 		response.ErrorMessage = err.Error()
 		return false, response
 	}
-	personStore := persons.NewPersonStore()
+	personStore := person_store.NewPersonStore()
 	res, err := personStore.GetPerson(id)
 	if err != nil {
 		response.Status = apibase.ApiStatusError
