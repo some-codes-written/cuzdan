@@ -24,8 +24,8 @@ func (s *PersonStore) GetPerson(id uint) (*person_models.Person, error) {
 	return person, nil
 }
 
-func (s *PersonStore) GetPersons() ([]*person_models.Person, error) {
-	var persons []*person_models.Person
+func (s *PersonStore) GetPersons() (*[]person_models.Person, error) {
+	var persons *[]person_models.Person
 	txres := s.Db.Transaction(func(tx *gorm.DB) error {
 
 		res := tx.Table(person_models.PERSONS).Find(&persons)

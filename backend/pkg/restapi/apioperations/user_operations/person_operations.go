@@ -12,28 +12,8 @@ import (
 
 func PersonList(w http.ResponseWriter, r *http.Request) (bool, models.PersonListResponse) {
 
-	personStore := person_store.NewPersonStore()
-	res, err := personStore.GetPersons()
-
-	var persons []models.PersonDto
-	var response models.PersonListResponse
-
-	if err != nil {
-		response.Status = apibase.ApiStatusError
-		response.ErrorMessage = err.Error()
-		return false, response
-	}
-	for _, person := range res {
-		persons = append(persons, models.PersonDto{
-			ID:        person.ID,
-			FirstName: person.FirstName,
-			LastName:  person.LastName,
-		})
-	}
-	response.Persons = persons
-	response.Status = apibase.ApiStatusSuccess
-	return true, response
-
+	store := person_store.NewPersonStore()
+	list[], err := store.GetPersons()
 }
 
 func GetPerson(w http.ResponseWriter, r *http.Request) (bool, models.PersonResponse) {
